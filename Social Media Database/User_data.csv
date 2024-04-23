@@ -1,4 +1,4 @@
-id,platform,username,caption,likes,shares,comments,timestamp
+id,platform,username,caption,likes,comments,timestamp, shares
 1,Instagram,happysoul123,Feeling grateful today! 🌟,150,40,2023-12-15T08:30:00Z,
 2,Facebook,creativegirl22,Check out our latest blog post!,300,50,2023-11-20T12:00:00Z,150
 3,Twitter,techiegeek007,Exploring new technologies 🔬,400,100,2023-10-25T15:00:00Z,
