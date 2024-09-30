@@ -26,26 +26,28 @@ class UserData(Dbase):
     __tablename__ = "user_data"
     id = Column(Integer, primary_key= True, autoincrement= True)
 
-# loop to convert CSV dtype into ORM dtype and add into "user_data" table
+# Loop to convert CSV dtype into ORM dtype and add into "user_data" table
 for col in columns:
     str_dtype = str(dtypes[col])
     col_type = dtypes_dict.get(str_dtype, String)
     setattr(UserData, col, Column(col_type))
 
-# initiate SQLite engine for database connection
+# Initiate SQLite engine for database connection
 engine = create_engine("sqlite:///database.db")
 
 # Table creation built off base and SQLite engine
 Dbase.metadata.create_all(engine)
 
-# session creation for this specific engine, allowing for 
+# Session creation for this specific engine, allowing for 
 # database interaction and manipulation
 smaker = sessionmaker(bind=engine)
 session = smaker()
 
-# Convert "df" into dictionaries 
+# Convert "df" into list of dictionaries where each row is a dictionary. Key: Column, Value: Row Info
 ud_dict = df.to_dict(orient='records')
 
+# Insert dictionary list into "UserData" table, filling in schema
 session.bulk_insert_mappings(UserData, ud_dict)
 
+# Finalizing SQL transaction
 session.commit()
