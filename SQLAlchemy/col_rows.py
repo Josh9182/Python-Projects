@@ -8,7 +8,7 @@ df = pd.DataFrame(spec_cols)
 print(df)
 
 
-# Variable performing the SQL Query: SELECT * FROM UserData WHERE ID < 30. 
+# Variable performing the SQL Query: SELECT * FROM UserData WHERE ID <= 30. 
 # Effectively choosing the first 30 rows.
 spec_rows = session.query(UserData).filter(UserData.id <= 30).all()
 
