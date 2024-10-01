@@ -1,8 +1,8 @@
-# Variable performing the SQL Query: SELECT * FROM UserData WHERE ID <= 30. 
-# Effectively choosing the first 30 rows.
-spec_rows = session.query(UserData).filter(UserData.id <= 30).all()
+# Variable performing the SQL Query: SELECT * FROM UserData WHERE ID BETWEEN 1 AND 30 ORDER BY id DESC 
+spec_rows = session.query(UserData).filter(UserData.id.between(1,30)).order_by(UserData.id.desc()).all()
 
-spec_rows2 = session.query(UserData).filter(UserData.username.in_(["happysoul123", "petlover222", "gardeningenthusiast999"]))
+# EXAMPLE variable performing the SQL Query: SELECT * FROM UserData WHERE username IN ("happysoul123", "petlover222", "gardeningenthusiast999"). 
+spec_rows2 = session.query(UserData).filter(UserData.username.in_(["happysoul123", "petlover222", "gardeningenthusiast999"])) 
 
 # Converting SQLAlchemy schema into a list of dictionaries.
 spec_dict = [x.__dict__ for x in spec_rows]
