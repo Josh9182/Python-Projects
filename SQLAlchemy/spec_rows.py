@@ -9,10 +9,10 @@ spec_dict = [x.__dict__ for x in spec_rows]
 
 # Iterate through every column in the dictionary, removing the SQLAlchemy instance from each element.
 for col in spec_dict:
-    col.pop("_sa_instance_stance", None)
+    col.pop("_sa_instance_state", None)
 
 # Converting result from a list of dictionarys into a DataFrame, showing columns "id" & "username".
-df = pd.DataFrame(spec_dict, columns= ["id", "username"])
+df = pd.DataFrame(spec_dict)
 
 # Viewing result
 print(df)
