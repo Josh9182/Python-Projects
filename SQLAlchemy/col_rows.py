@@ -12,8 +12,15 @@ print(df)
 # Effectively choosing the first 30 rows.
 spec_rows = session.query(UserData).filter(UserData.id <= 30).all()
 
+# Converting SQLAlchemy schema into a list of dictionaries.
+spec_dict = [x.__dict__ for x in spec_rows]
+
+# Iterate through every column in the dictionary, removing the SQLAlchemy instance from each element.
+for col in spec_dict:
+    col.pop("_sa_instance_stance", None)
+
 # Converting result from a list of dictionarys into a DataFrame
-df = pd.DataFrame(spec_rows)
+df = pd.DataFrame(spec_dict)
 
 # Viewing result
 print(df)
