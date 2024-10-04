@@ -8,8 +8,9 @@ odf = pd.read_csv("C:\\Users\\joshlewis\\Downloads\\ShinyApp\\occupation_data.cs
 
 # Get column names and data types from DataFrames
 user_columns = df.columns
-user_dtypes = df.dtypes
 occ_columns = odf.columns
+
+user_dtypes = df.dtypes
 occ_dtypes = odf.dtypes
 
 # Data type mappings for SQLAlchemy
