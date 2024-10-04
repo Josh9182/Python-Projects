@@ -1,6 +1,6 @@
 import pandas as pd
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
-from sqlalchemy import create_engine, ForeignKey, Column, Float, String, Integer
+from sqlalchemy import create_engine, ForeignKey, Column, Float, String, Integer, func
 
 # CSV imports, converted to DataFrames
 df = pd.read_csv("C:\\Users\\joshlewis\\Downloads\\ShinyApp\\user_data.csv")
