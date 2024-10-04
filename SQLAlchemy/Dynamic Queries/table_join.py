@@ -63,9 +63,9 @@ session.bulk_insert_mappings(UserData, ud_dict) # Insert ud_dict into "UserData"
 
 # Due to ForeignKey constraint, "OccData" must be manually merged into "UserData" utilizing a for loop
 od_dict = []
-for col, row in df.iterrows():
+for _, row in df.iterrows():
     user_occupations = odf[odf['username'] == row['username']]  # Find matching occupations
-    for col, occ_row in user_occupations.iterrows():
+    for _, occ_row in user_occupations.iterrows():
         occ_entry = {
             'username': occ_row['username'],
             'name': occ_row['name'],
@@ -73,16 +73,34 @@ for col, row in df.iterrows():
             'user_id': session.query(UserData.id).filter(UserData.username == occ_row['username']).scalar()}
         od_dict.append(occ_entry)
 
+# Insert list of dictionaries into "OccData" table
 session.bulk_insert_mappings(OccData, od_dict)
 
-# Commit the session to save the data
+# Save progress
 session.commit()
 
-# Perform a join query
+# joint_table variable housing a join query based off table ids
 joint_table = session.query(UserData, OccData).join(OccData, UserData.id == OccData.user_id).all()
 
-# Extract and print the results
-data = [(user.username, occupation.occupation) for user, occupation in joint_table]
-df_result = pd.DataFrame(data, columns=['Username', 'Occupation'])
+# Utilizing a dictionary, organize all information and iterate throughout
+join_data = [
+    {
+        "user_id": user.id,
+        "username": user.username,
+        "platform": user.platform,
+        "caption": user.caption,
+        "likes": user.likes,
+        "comments": user.comments,
+        "shares": user.shares,
+        "timestamp": user.timestamp,
+        "occ_id": occupation.id,
+        "name": occupation.name,
+        "occupation": occupation.occupation,
+        "occ_user_id": occupation.user_id}
+    for user, occupation in joint_table]
 
-print(df_result)
+# Convert dictionary into DataFrame
+df = pd.DataFrame(join_data)
+
+# Visualize DataFrame
+print(df)
