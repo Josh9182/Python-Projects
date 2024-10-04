@@ -50,7 +50,9 @@ for ocol in Ocolumns:
 # Initiate SQLite engine for database connection
 engine = create_engine("sqlite:///data_base.db")
 
+# Error proofing engine, dropping any previous tables.
 # Tables created, built off base and SQLite engine
+Dbase.metadata.drop_all(engine)
 Dbase.metadata.create_all(engine)
 
 # Session creation for this specific engine, allowing for 
