@@ -2,14 +2,15 @@ import pandas as pd
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 from sqlalchemy import create_engine, ForeignKey, Column, Float, String, Integer
 
-# CSV imports
+# CSV imports, converted to DataFrames
 df = pd.read_csv("C:\\Users\\joshlewis\\Downloads\\ShinyApp\\user_data.csv")
 odf = pd.read_csv("C:\\Users\\joshlewis\\Downloads\\ShinyApp\\occupation_data.csv")
 
-# Accessing column names for both files imports
+# Accessing column names for both file imports
 columns = df.columns
 Ocolumns = odf.columns
 
+# Accessing data types for both DataFrames
 dtypes = df.dtypes
 Odtypes = odf.dtypes
 
@@ -55,10 +56,9 @@ engine = create_engine("sqlite:///data_base.db")
 Dbase.metadata.drop_all(engine)
 Dbase.metadata.create_all(engine)
 
-# Session creation for this specific engine, allowing for 
-# database interaction and manipulation
+# Session creation for this specific engine
 smaker = sessionmaker(bind=engine)
-session = smaker()
+session = smaker() # Variable initiating engine, allowing for table manipulation
 
 # Convert "df" & "odf" into list of dictionaries where each row is a dictionary. Key: Column, Value: Row Info
 ud_dict = df.to_dict(orient="records")
